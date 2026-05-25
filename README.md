@@ -14,7 +14,13 @@ A focused Android chat client that talks to the OpenAI `/chat/completions` API (
 
 ## Screenshots
 
-Screenshots will be captured on a fresh emulator run and dropped into [`Screenshots/`](Screenshots/) with the convention `01_empty_state.png · 02_chat_streaming.png · 03_chat_history.png · 04_settings.png`. The [Screenshots/README.md](Screenshots/README.md) documents the capture protocol (`adb exec-out screencap -p > Screenshots/0X_name.png` from a connected emulator).
+<p align="center">
+  <img src="Screenshots/01_chat_states_mockup.png" width="780" alt="AI Chat Assistant — empty state and streaming chat" />
+</p>
+
+Left: empty state with "Start a conversation" prompt. Right: in-progress streaming chat — user bubble (Material 3 primary blue) on the right, AI bubble (neutral grey) on the left, and a 3-dot typing indicator while the next response streams.
+
+> The image above is an HTML-rendered design mockup of the live app's chat UI (Material 3 colors + layout). Real emulator captures using `adb exec-out screencap -p > Screenshots/0X_name.png` are pending an Android Studio install — when those land they'll replace this mockup with the same naming convention.
 
 ---
 
