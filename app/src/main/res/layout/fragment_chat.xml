@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
+
+    <!-- App bar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/app_name" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Main content below app bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- Empty state -->
+        <LinearLayout
+            android:id="@+id/layout_empty_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/layout_input"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/empty_state_title"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                android:textColor="?attr/colorOnSurface" />
+
+            <TextView
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/empty_state_subtitle"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                android:textColor="?attr/colorOnSurfaceVariant" />
+
+        </LinearLayout>
+
+        <!-- Message list -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="8dp"
+            android:scrollbars="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/layout_input"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Input bar -->
+        <LinearLayout
+            android:id="@+id/layout_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
+            android:elevation="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/hint_message">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionSend"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:maxLines="5"
+                    android:minLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_send"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/cd_send_button"
+                android:enabled="false"
+                app:icon="@drawable/ic_send"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

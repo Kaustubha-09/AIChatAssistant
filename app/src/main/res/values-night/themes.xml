@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.AIChatAssistant" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">#7986CB</item>
+        <item name="colorPrimaryContainer">#1A237E</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSurface">#1C1B1F</item>
+        <item name="colorOnSurface">#E6E1E5</item>
+        <item name="colorOnSurfaceVariant">#CAC4D0</item>
+        <item name="android:windowBackground">#121212</item>
+        <item name="android:statusBarColor">#121212</item>
+    </style>
+
+</resources>

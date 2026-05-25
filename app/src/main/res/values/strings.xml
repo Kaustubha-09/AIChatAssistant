@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Chat</string>
+
+    <!-- Chat screen -->
+    <string name="hint_message">Message AI\u2026</string>
+    <string name="cd_send_button">Send message</string>
+    <string name="empty_state_title">Start a conversation</string>
+    <string name="empty_state_subtitle">Ask me anything — code, questions, analysis, writing.</string>
+
+    <!-- Menu -->
+    <string name="menu_clear_chat">Clear chat</string>
+    <string name="menu_settings">Settings</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_system_prompt">System Prompt</string>
+    <string name="settings_api_key">API Key</string>
+    <string name="settings_model">Model</string>
+    <string name="settings_use_mock">Use Mock Provider</string>
+    <string name="settings_save">Save</string>
+
+    <!-- Actions -->
+    <string name="action_retry">Retry</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+</resources>
