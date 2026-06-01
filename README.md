@@ -15,12 +15,16 @@ A focused Android chat client that talks to the OpenAI `/chat/completions` API (
 ## Screenshots
 
 <p align="center">
-  <img src="Screenshots/01_chat_states_mockup.png" width="780" alt="AI Chat Assistant — empty state and streaming chat" />
+  <img src="Screenshots/00_real_two_up.png" width="780" alt="AI Chat Assistant — real Android emulator captures of empty state and streaming chat" />
 </p>
 
-Left: empty state with "Start a conversation" prompt. Right: in-progress streaming chat — user bubble (Material 3 primary blue) on the right, AI bubble (neutral grey) on the left, and a 3-dot typing indicator while the next response streams.
+Real Android emulator captures (Pixel 8, API 34, headless) — empty state on the left, streaming response from the mock provider on the right. Built locally with `gradle 8.5 assembleDebug`, installed via `adb install`, screenshotted with `adb exec-out screencap -p`.
 
-> The image above is an HTML-rendered design mockup of the live app's chat UI (Material 3 colors + layout). Real emulator captures using `adb exec-out screencap -p > Screenshots/0X_name.png` are pending an Android Studio install — when those land they'll replace this mockup with the same naming convention.
+| Capture | Surface |
+|---|---|
+| [`01_empty_state.png`](Screenshots/01_empty_state.png) | Fresh launch — "Start a conversation" placeholder + Settings (gear) + Clear (X) action bar |
+| [`02_chat_response.png`](Screenshots/02_chat_response.png) | User message + AI response bubble rendered through the same `Resource<Loading/Success/Error>` pipeline the real API uses |
+| [`03_settings.png`](Screenshots/03_settings.png) | Settings bottom sheet — system prompt, API key, model picker, mock-provider toggle |
 
 ---
 
