@@ -288,33 +288,6 @@ Full ADRs in [docs/decisions.md](docs/decisions.md).
 - **0** Hilt / Dagger; manual DI via `ServiceLocator`
 - **0** third-party UI libs beyond Material 3 + RecyclerView
 
----
-
-## Resume Bullets
-
-- Built a **native Android chat client** for OpenAI-compatible LLM endpoints in **Java 17 + Material 3** — single-Activity / single-Fragment, clean-architecture layering (UI · Domain · Data), and a manual `ServiceLocator` for dependency injection in place of Hilt.
-- Implemented **streaming SSE responses** by dropping below Retrofit to raw OkHttp — Retrofit's `Call.execute()` buffers the full response, defeating `stream: true`; the streaming path parses `data: { ... }` chunks line-by-line as they arrive.
-- Designed a **`Resource<T>` wrapper** (`Loading / Success / Error`) as the single shape for async state, so every `LiveData` stream is exhaustively switchable — same pattern as `ViewState<T>` in my iOS projects.
-- Built a **mock streaming provider** that emits tokens through the same `Resource.Loading → Resource.Success` pipeline as the real API, so every UX state (typing indicator, partial render, final-collapse) is reachable offline without an API key.
-- Persisted chat history with **Room** (`MessageEntity`, `MessageDao`) and exposed it via `LiveData<List<MessageEntity>>` so the UI auto-refreshes on insert; `clear()` wipes the table from the action-bar menu.
-- Migrated **API-key loading from `build.gradle` to `gradle.properties` / environment** after catching a hardcoded key in source — added strict `.gitignore` rules and documented the policy in [ADR-006](docs/decisions.md#adr-006--api-key-loaded-from-gradleproperties-never-hardcoded).
-
----
-
-## Interview Talking Points
-
-**Why `ServiceLocator` instead of Hilt.** The dependency graph is ~10 objects. Hilt would add an annotation processor, generated code, build-time overhead, and `@HiltAndroidApp` / `@AndroidEntryPoint` ceremony. At this scale, manual DI is faster to read, faster to debug, and easier to swap under test (via a `@VisibleForTesting setForTest()` shim). Hilt becomes worth it at a much larger scale — multi-feature apps with deep dependency graphs.
-
-**OkHttp directly for streaming.** Retrofit's `Call.execute()` buffers the response body into a `String` before returning. That's fine for normal requests but defeats `stream: true` — we'd see the assistant's reply only after generation finished. The streaming path uses OkHttp's `Call.execute()` against a raw `ResponseBody`, reads the SSE stream line-by-line, parses each `data: { ... }` chunk as it arrives, and pushes partial-token `Resource.Loading` events to the UI. The non-streaming path still uses Retrofit. Two HTTP styles, kept inside `RemoteChatDataSource` so the rest of the app doesn't see the seam.
-
-**Streaming-pipeline-equivalent mock provider.** The `MockStreamingDataSource` doesn't return a canned `"Hello!"` atomically. It emits tokens through the same `Resource.Loading → Loading → … → Success` pipeline as the real API. The UI's typing-indicator animation, partial-render logic, and final-collapse behavior all exercise on the mock path. A trivial mock would skip those code paths and let UX bugs slip into production. Streaming-equivalent mock means every state the user sees in production is reachable in CI / offline development.
-
-**`Resource<T>` over three booleans.** The classic `isLoading: Boolean, error: String?, data: T?` pattern admits invalid combinations — loading AND error AND data is representable but never meaningful. A sealed `Resource<T>` (`Loading / Success<T> / Error(message)`) makes those unrepresentable at the type level. SwiftUI's `switch` exhaustiveness check, Java's switch expression, Kotlin's `when` — all catch missing branches at compile time on a sealed wrapper, not on three booleans.
-
-**Catching the API-key leak.** An earlier version had a real OpenAI key literal-embedded in `app/build.gradle`. Any push to a public repo would have leaked it via GitHub's secret-scanning index within minutes. We migrated to `~/.gradle/gradle.properties` + `System.getenv()` with an empty fallback so the build works without a key (mock provider becomes the default). The `.gitignore` excludes `local.properties`, `*.keys`, `secrets.properties`, `api_keys.properties`, `local.gradle.properties`. Documented in [ADR-006](docs/decisions.md#adr-006--api-key-loaded-from-gradleproperties-never-hardcoded). Defensive engineering on credentials is a basic skill that lots of resumes skip.
-
----
-
 ## Roadmap
 
 - Markdown rendering for AI bubbles (code blocks, lists, inline code) — roadmap Phase 2
